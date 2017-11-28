@@ -1,46 +1,81 @@
-{% extends "home-base.html"%}
+{% extends "home-base.html" %}
 {% block title %}Courses{% endblock %}
-{% block head%}
-  {{ super() }}
-{% endblock%}
-{% block page_content%}
+{% block head %} {{ super () }} {% endblock %}
 
-  <!-- Page Content -->
-  <div class="container">
-    <h1 class="mt-5"> <i class="fa fa-music" aria-hidden="true"></i> Courses </h1>
+{% block page_content %}
+<div class="container">
+  <i class="fa fa-car fa-2x" aria-hidden="true"> Courses
+    <a href="/course/add" class="btn btn-primary" role="button" aria-disabled="true">Add Courses</a>
+  </i>
 
-        {% for course in courses %}
-        <ul class="list-unstyled">
-  <li>
-    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#{{course}}">{{course}}</button>
-    <div class="modal fade" id="{{course}}" tabindex="-1" role="dialog" aria-labelledby="{{course}}Label" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="{{course}}label">Course Info</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-          </div>
-          <div class="modal-body">
-            <h3>{{course}}</h3> {% if course == 'MISY330' %}
-            <p>Databases design</p>
-            {% elif course == 'MISY350' %}
-            <p>Web Deasign</p>
-            {% else %}
-            <p>Learning Access and Excel</p>
-            {% endif %}
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+  <!-- LOOPING -->
+  {% if courses %}
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Course Number</th>
+        <th>Title</th>
+        <th>Professor</th>
+        <th>Description</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for course in courses %}
+      <tr>
+              <th scope="row">{{ course.id }}</th>
+              <td>{{ course.course_number }}</td>
+              <td>{{ course.title }}</td>
+              <td>{{ course.professor.name }}</td>
+              <td>
+      <!-- BUTTON -->
+      <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#{{course.id}}">View</button>
+
+      <!-- MODAL -->
+      <div class="modal fade" id="{{course.id}}" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">{{course.title}}</h5>
+
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+            </div>
+
+            <div class="modal-body">
+              <p>{{course.description}}</p>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+
           </div>
         </div>
       </div>
-    </div>
-  </li>
-</ul>
-        {% endfor %}
+      </td>
 
-  </div>
+      <td>
+        <a href="/course/edit/{{course.id}}" class="btn btn-primary" role="button" aria-disabled="true">Edit</a>
+      </td>
+      {% endfor%}
+       </tr>
+    </tbody>
+  </table>
 
-{% endblock%}
+  {% else %}
+  <h3>There are no courses in the database yet.</h3>
+  {% endif %}
+</div>
+
+  <!-- Custom Style -->
+  <style>
+backgroud{
+  padding-top: 100
+}
+
+  </style>
+{% endblock %}
