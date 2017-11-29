@@ -1,20 +1,22 @@
 {% extends "home-base.html"%}
+
+
 {% block title %}Edit Courses{% endblock %}
+
 {% block page_content%}
 
   <!-- Page Content -->
   <div class="container">
-    <h1 class="mt-5"><i class="fa fa-refresh" aria-hidden="true"></i> Edit Course:</h1>
+    <h1><i class="fa fa-arrows-alt" aria-hidden="true"></i> Edit Course:</h1>
     <form action="/course/edit/{{course.id}}" method="post">
-
       <div class="form-group">
-        <label>Course Number</label>
-        <input class="form-control" type="text" name="course_number" value="{{course.course_number}}" required="true">
+        <label>Course Name</label>
+        <input class="form-control" type="text" name="number" value="{{course.number}}" required="true">
       </div>
 
       <div class="form-group">
         <label>Title</label>
-        <input class="form-control" type="text" name="course" value="{{course.title}}" required="true">
+        <input class="form-control" type="text" name="title" value="{{course.title}}" required="true">
       </div>
 
       <div class="form-group">
@@ -22,7 +24,7 @@
         <select class="form-control" name="professor">
           {% for professor in professors %}
             {% if professor == course.professor %}
-              <option selected="selected">{{ professor.name }}</option>
+              <option selected="selected">{{professor.name}}</option>
             {% else %}
               <option>{{professor.name}}</option>
             {% endif %}
@@ -33,11 +35,13 @@
       <div class="form-group">
         Professor not in the list? <a href="/professor/add" class="btn btn-outline-primary" role="button" aria-disabled="true">Add Professors</a>
       </div>
+
       <div class="form-group">
         <label>Description</label>
         <textarea class="form-control" name="description" required="true">{{course.description}}</textarea>
       </div>
-      <button type="submit" class="btn btn-primary" style="color:white;">Save Changes</button>
+
+      <button type="submit" class="btn btn-primary">Save Changes</button>
     </form>
   </div>
 

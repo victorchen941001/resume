@@ -57,7 +57,7 @@ def add_professors():
 
 @app.route('/professor/edit/<int:id>', methods=['GET', 'POST'])
 def edit_professor(id):
-    professor= Professor.query.filter_by(id=id).first()
+    professor = Professor.query.filter_by(id=id).first()
     if request.method == 'GET':
         return render_template('professor-edit.html', professor=professor)
     if request.method == 'POST':
@@ -78,22 +78,21 @@ def courses():
 def add_courses():
     if request.method == 'GET':
         professors = Professor.query.all()
-        return render_template('course-add.html', courses=courses, professors=professors)
+        return render_template('course-add.html', professors=professors)
 
     if request.method == 'POST':
         # get data from the form
-        course_number = request.form['course_number']
+        number = request.form['number']
         title = request.form['title']
         description = request.form['description']
         professor_name = request.form['professor']
         professor = Professor.query.filter_by(name=professor_name).first()
-        course = Course(course_number=course_number,title=title, description=description)
+        course = Course(number=number,title=title, description=description, professor=professor)
 
         # insert the data into the database
         db.session.add(course)
         db.session.commit()
         return redirect(url_for('courses'))
-
 
 @app.route('/course/edit/<int:id>', methods=['GET', 'POST'])
 def edit_course(id):
@@ -102,8 +101,7 @@ def edit_course(id):
     if request.method == 'GET':
         return render_template('course-edit.html', course=course, professors=professors)
     if request.method == 'POST':
-        # update data based on the form data
-        course_number = request.form['course_number']
+        course.number = request.form['number']
         course.title = request.form['title']
         course.description = request.form['description']
         professor_name = request.form['professor']
@@ -111,7 +109,6 @@ def edit_course(id):
         course.professor = professor
         # update the database
         db.session.commit()
-        return redirect(url_for('course'))
 
 if __name__ == '__main__':
     app.run(debug=True)
