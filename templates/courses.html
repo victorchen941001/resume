@@ -25,10 +25,10 @@
     <tbody>
       {% for course in courses %}
       <tr>
-              <th scope="row">{{ course.id }}</th>
-              <td>{{ course.course_number }}</td>
-              <td>{{ course.title }}</td>
-              <td>{{ course.professor.name }}</td>
+              <th scope="row">{{course.id}}</th>
+              <td>{{course.number}}</td>
+              <td>{{course.title}}</td>
+              <td>{{course.professor.name}}</td>
               <td>
       <!-- BUTTON -->
       <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#{{course.id}}">View</button>

@@ -20,7 +20,7 @@ class Professor(db.Model):
 class Course(db.Model):
     __tablename__ = 'courses'
     id = db.Column(db.Integer, primary_key=True)
-    course_number = db.Column(db.String(60))
+    number = db.Column(db.String(60))
     title = db.Column(db.String(256))
     description = db.Column(db.Text)
     professor_id = db.Column(db.Integer, db.ForeignKey('professors.id'))
@@ -109,6 +109,7 @@ def edit_course(id):
         course.professor = professor
         # update the database
         db.session.commit()
+        return redirect(url_for('courses'))
 
 if __name__ == '__main__':
     app.run(debug=True)
